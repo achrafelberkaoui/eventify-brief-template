@@ -85,6 +85,13 @@ const eventForm = document.getElementById("event-form")
 
 eventForm.addEventListener('submit', function (e) {
     e.preventDefault();
+    hideError();
+
+    const msgErr = validaTion();
+    if( msgErr !== ""){
+        showError(msgErr);
+        return;
+    }
 
     const AjjEven = {
         id: Date.now(),
@@ -100,5 +107,39 @@ eventForm.addEventListener('submit', function (e) {
     renderStats();
     switchScreen('list');
 
+
 });
+const errOr = document.getElementById("form-errors");
+
+function showError(msg) {
+    errOr.classList.remove("is-hidden");
+    errOr.textContent = msg;
+}
+
+function hideError() {
+    errOr.classList.add("is-hidden");
+    errOr.textContent = "";
+}
+function validaTion() {
+    const title = document.getElementById("event-title").value.trim();
+    const image = document.getElementById("event-image").value.trim();
+    const description = document.getElementById("event-description").value.trim();
+    const seats = document.getElementById("event-seats").value.trim();
+    const price = document.getElementById("event-price").value.trim();
+    const imageRegex = /\.(jpg|jpeg|png|gif)$/i;
+    if (title === "") return "title faild";
+
+    if (description.length < 5) return "Minmum 5 emots";
+
+    if (seats === "" || Number(seats) <= 0) return "entrer un valeaur positif";
+
+    if (price === "" || Number(price) <= 0) return "entrer un prix positive";
+
+    if (image !== "" && !imageRegex.test(image)) {
+        return "Image must end with .jpg, .jpeg, .png, or .gif";
+    }
+
+    return "";
+}
+
 
