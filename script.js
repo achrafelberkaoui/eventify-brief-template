@@ -2,6 +2,7 @@
 let events = [];
 let archive = [];
 
+
 // Save/load from localStorage
 function loadData() {
     // TODO: Load events and archive from localStorage
@@ -88,28 +89,35 @@ eventForm.addEventListener('submit', function (e) {
     hideError();
 
     const msgErr = validaTion();
-    if( msgErr !== ""){
+    if (msgErr !== "") {
         showError(msgErr);
         return;
     }
 
-    const AjjEven = {
+    const variantRows = document.querySelectorAll(".variant-row");
+    const variants = Array.from(variantRows).map(row => ({
+        name: row.querySelector(".variant-row__name").value.trim(),
+        qty: Number(row.querySelector(".variant-row__qty").value),
+        value: Number(row.querySelector(".variant-row__value").value),
+        type: row.querySelector(".variant-row__type").value
+    }));
+    const AddEvent = {
         id: Date.now(),
         title: document.getElementById("event-title").value,
         image: document.getElementById("event-image").value,
         description: document.getElementById("event-description").value,
         seats: Number(document.getElementById("event-seats").value),
         price: Number(document.getElementById("event-price").value),
-        variants: []
+        variants: variants
 
     };
-    events.push(AjjEven);
+    events.push(AddEvent);
     renderStats();
-    ajjtab();
+    addTable();
     switchScreen('list');
 
-
 });
+
 const errOr = document.getElementById("form-errors");
 
 function showError(msg) {
@@ -143,11 +151,11 @@ function validaTion() {
     return "";
 }
 
-function ajjtab(){
+function addTable() {
     const tabElm = document.getElementById("affichTable");
-        tabElm.innerHtml = "";
-    
-    events.forEach((event, index)=> {
+    tabElm.innerHTML = " ";
+
+    events.forEach((event, index) => {
         const tr = document.createElement("tr");
         tr.setAttribute("data-event-id", event.id);
 
@@ -167,4 +175,32 @@ function ajjtab(){
     });
 
 }
+function addVariantRow() {
+
+    const varian = document.getElementById("variants-list");
+
+    const row = document.createElement("div");
+    row.className = "variant-row"
+    row.innerHTML = `
+
+        <input type="text" class="input variant-row__name" placeholder="Variant name (e.g., 'Early Bird')" />
+        <input type="number" class="input variant-row__qty" placeholder="Qty" min="1" />
+        <input type="number" class="input variant-row__value" placeholder="Value" step="0.01" />
+        <select class="select variant-row__type">
+            <option value="fixed">Fixed Price</option>
+            <option value="percentage">Percentage Off</option>
+        </select>
+        <button type="button" class="btn btn--danger btn--small variant-row__remove">Remove</button>
+    `;
+
+    row.querySelector('.variant-row__remove').addEventListener("click", () => {
+        row.remove();
+    })
+    varian.appendChild(row);
+}
+const btnVar = document.getElementById("btn-add-variant")
+btnVar.addEventListener('click', addVariantRow)
+
+
+
 
