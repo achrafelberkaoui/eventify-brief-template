@@ -105,6 +105,7 @@ eventForm.addEventListener('submit', function (e) {
     };
     events.push(AjjEven);
     renderStats();
+    ajjtab();
     switchScreen('list');
 
 
@@ -142,4 +143,28 @@ function validaTion() {
     return "";
 }
 
+function ajjtab(){
+    const tabElm = document.getElementById("affichTable");
+        tabElm.innerHtml = "";
+    
+    events.forEach((event, index)=> {
+        const tr = document.createElement("tr");
+        tr.setAttribute("data-event-id", event.id);
+
+        tr.innerHTML = `
+            <td>${index + 1}</td>
+            <td>${event.title}</td>
+            <td>${event.seats}</td>
+            <td>$${event.price}</td>
+            <td>${event.variants.length}</td>
+            <td>
+                <button class="btn btn--small" data-action="details" data-event-id="${event.id}">Details</button>
+                <button class="btn btn--small" data-action="edit" data-event-id="${event.id}">Edit</button>
+                <button class="btn btn--danger btn--small" data-action="archive" data-event-id="${event.id}">Delete</button>
+            </td>
+        `;
+        tabElm.appendChild(tr);
+    });
+
+}
 
