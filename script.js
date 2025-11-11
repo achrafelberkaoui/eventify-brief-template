@@ -2,6 +2,7 @@
 let events = [];
 let archive = [];
 
+
 // Save/load from localStorage
 function loadData() {
     // TODO: Load events and archive from localStorage
@@ -88,13 +89,13 @@ eventForm.addEventListener('submit', function (e) {
     hideError();
 
     const msgErr = validaTion();
-    if( msgErr !== ""){
+    if (msgErr !== "") {
         showError(msgErr);
         return;
     }
-
+    let count = 1;
     const AjjEven = {
-        id: Date.now(),
+        id: count,
         title: document.getElementById("event-title").value,
         image: document.getElementById("event-image").value,
         description: document.getElementById("event-description").value,
@@ -108,8 +109,8 @@ eventForm.addEventListener('submit', function (e) {
     ajjtab();
     switchScreen('list');
 
-
 });
+
 const errOr = document.getElementById("form-errors");
 
 function showError(msg) {
@@ -143,11 +144,11 @@ function validaTion() {
     return "";
 }
 
-function ajjtab(){
+function ajjtab() {
     const tabElm = document.getElementById("affichTable");
-        tabElm.innerHtml = "";
-    
-    events.forEach((event, index)=> {
+    tabElm.innerHTML = " ";
+
+    events.forEach((event, index) => {
         const tr = document.createElement("tr");
         tr.setAttribute("data-event-id", event.id);
 
@@ -156,7 +157,7 @@ function ajjtab(){
             <td>${event.title}</td>
             <td>${event.seats}</td>
             <td>$${event.price}</td>
-            <td>${event.variants.length}</td>
+            <td>${cntVar}</td>
             <td>
                 <button class="btn btn--small" data-action="details" data-event-id="${event.id}">Details</button>
                 <button class="btn btn--small" data-action="edit" data-event-id="${event.id}">Edit</button>
@@ -167,4 +168,32 @@ function ajjtab(){
     });
 
 }
+let cntVar = 0;
+function addVariantRow() {
+
+    const varian = document.getElementById("variants-list");
+    cntVar++;
+
+        varian.innerHTML += `
+    <div class="variant-row">
+        <input type="text" class="input variant-row__name" placeholder="Variant name (e.g., 'Early Bird')" />
+        <input type="number" class="input variant-row__qty" placeholder="Qty" min="1" />
+        <input type="number" class="input variant-row__value" placeholder="Value" step="0.01" />
+        <select class="select variant-row__type">
+            <option value="fixed">Fixed Price</option>
+            <option value="percentage">Percentage Off</option>
+        </select>
+        <button type="button" class="btn btn--danger btn--small variant-row__remove">Remove</button>
+    </div>
+    `;
+
+}
+const btnVar = document.getElementById("btn-add-variant")
+btnVar.addEventListener('click', addVariantRow)
+
+function removeVariantRow(button) {
+
+}
+
+
 
