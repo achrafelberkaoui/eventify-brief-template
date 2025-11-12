@@ -94,7 +94,14 @@ eventForm.addEventListener('submit', function (e) {
         return;
     }
 
-    const AjjEven = {
+    const variantRows = document.querySelectorAll(".variant-row");
+    const variants = Array.from(variantRows).map(row => ({
+        name: row.querySelector(".variant-row__name").value.trim(),
+        qty: Number(row.querySelector(".variant-row__qty").value),
+        value: Number(row.querySelector(".variant-row__value").value),
+        type: row.querySelector(".variant-row__type").value
+    }));
+    const AddEvent = {
         id: Date.now(),
         title: document.getElementById("event-title").value,
         image: document.getElementById("event-image").value,
@@ -144,7 +151,7 @@ function validaTion() {
     return "";
 }
 
-function ajjtab(){
+function addTable() {
     const tabElm = document.getElementById("affichTable");
     tabElm.innerHTML = " ";
 
@@ -157,7 +164,7 @@ function ajjtab(){
             <td>${event.title}</td>
             <td>${event.seats}</td>
             <td>$${event.price}</td>
-            <td>${cntVar}</td>
+            <td>${event.variants.length}</td>
             <td>
                 <button class="btn btn--small" data-action="details" data-event-id="${event.id}">Details</button>
                 <button class="btn btn--small" data-action="edit" data-event-id="${event.id}">Edit</button>
@@ -168,4 +175,28 @@ function ajjtab(){
     });
 
 }
+function addVariantRow() {
 
+    const varian = document.getElementById("variants-list");
+
+    const row = document.createElement("div");
+    row.className = "variant-row"
+    row.innerHTML = `
+
+        <input type="text" class="input variant-row__name" placeholder="Variant name (e.g., 'Early Bird')" />
+        <input type="number" class="input variant-row__qty" placeholder="Qty" min="1" />
+        <input type="number" class="input variant-row__value" placeholder="Value" step="0.01" />
+        <select class="select variant-row__type">
+            <option value="fixed">Fixed Price</option>
+            <option value="percentage">Percentage Off</option>
+        </select>
+        <button type="button" class="btn btn--danger btn--small variant-row__remove">Remove</button>
+    `;
+
+    row.querySelector('.variant-row__remove').addEventListener("click", () => {
+        row.remove();
+    })
+    varian.appendChild(row);
+}
+const btnVar = document.getElementById("btn-add-variant")
+btnVar.addEventListener('click', addVariantRow)
