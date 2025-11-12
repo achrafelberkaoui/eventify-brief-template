@@ -46,7 +46,7 @@ function switchScreen(screenId) {
     } else if (screenId === "add") {
         title.textContent = "Add Event";
         subTitle.textContent = "Manage your events";
-            document.getElementById("creat").textContent =" Create Event";
+        document.getElementById("creat").textContent = " Create Event";
     } else if (screenId === "list") {
         title.textContent = "Events List";
         subTitle.textContent = "Create a new event"
@@ -102,21 +102,33 @@ eventForm.addEventListener('submit', function (e) {
         value: Number(row.querySelector(".variant-row__value").value),
         type: row.querySelector(".variant-row__type").value
     }));
-    const AddEvent = {
-        id: Date.now(),
-        title: document.getElementById("event-title").value,
-        image: document.getElementById("event-image").value,
-        description: document.getElementById("event-description").value,
-        seats: Number(document.getElementById("event-seats").value),
-        price: Number(document.getElementById("event-price").value),
-        variants: variants
+    if (editId) {
+        const ev = events.find(e => e.id == editId)
+        ev.title = document.getElementById("event-title").value;
+        ev.image = document.getElementById("event-image").value;
+        ev.description = document.getElementById("event-description").value;
+        ev.seats = Number(document.getElementById("event-seats").value);
+        ev.price = Number(document.getElementById("event-price").value);
+        ev.variants = variants;
+        editId = null;
+    } else {
+        const AddEvent = {
+            id: Date.now(),
+            title: document.getElementById("event-title").value,
+            image: document.getElementById("event-image").value,
+            description: document.getElementById("event-description").value,
+            seats: Number(document.getElementById("event-seats").value),
+            price: Number(document.getElementById("event-price").value),
+            variants: variants
 
-    };
-    events.push(AddEvent);
+        };
+        events.push(AddEvent);
+    }
     renderStats();
     addTable();
     switchScreen('list');
     eventForm.reset();
+    document.getElementById("variants-list").innerHTML = "";
 
 });
 
@@ -232,8 +244,10 @@ function ShowDetails(id) {
     alert(`Title : ${ev.title} \n Seats : ${ev.seats} \n Prix : ${ev.price} `);
 
 }
+let editId = null;
 function ShowEdit(id) {
     const vn = events.find(l => l.id == id);
+    editId = id;
     console.log(vn);
     document.getElementById("event-title").value = vn.title;
     document.getElementById("event-image").value = vn.image;
