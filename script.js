@@ -45,7 +45,8 @@ function switchScreen(screenId) {
         subTitle.textContent = "Overview of your events"
     } else if (screenId === "add") {
         title.textContent = "Add Event";
-        subTitle.textContent = "Manage your events"
+        subTitle.textContent = "Manage your events";
+            document.getElementById("creat").textContent =" Create Event";
     } else if (screenId === "list") {
         title.textContent = "Events List";
         subTitle.textContent = "Create a new event"
@@ -115,6 +116,7 @@ eventForm.addEventListener('submit', function (e) {
     renderStats();
     addTable();
     switchScreen('list');
+    eventForm.reset();
 
 });
 
@@ -175,6 +177,7 @@ function addTable() {
     });
 
 }
+
 function addVariantRow() {
 
     const varian = document.getElementById("variants-list");
@@ -200,5 +203,47 @@ function addVariantRow() {
 }
 const btnVar = document.getElementById("btn-add-variant")
 btnVar.addEventListener('click', addVariantRow)
+
+
+const table = document.getElementById("affichTable");
+
+table.addEventListener("click", function (e) {
+    const btn = e.target;
+    const evenId = btn.dataset.eventId;
+    const action = btn.dataset.action;
+
+    if (action === "details") {
+        ShowDetails(evenId);
+    }
+    else if (action === "edit") {
+        ShowEdit(evenId);
+        console.log(evenId);
+        document.getElementById("creat").textContent = " Modifier"
+    }
+    else if (action === "archive") {
+        ShowArchive(evenId);
+    }
+})
+
+function ShowDetails(id) {
+    const ev = events.find(e => e.id == id);
+
+
+    alert(`Title : ${ev.title} \n Seats : ${ev.seats} \n Prix : ${ev.price} `);
+
+}
+function ShowEdit(id) {
+    const vn = events.find(l => l.id == id);
+    console.log(vn);
+    document.getElementById("event-title").value = vn.title;
+    document.getElementById("event-image").value = vn.image;
+    document.getElementById("event-description").value = vn.description;
+    document.getElementById("event-seats").value = vn.seats;
+    document.getElementById("event-price").value = vn.price;
+
+    switchScreen("add");
+
+}
+
 
 
