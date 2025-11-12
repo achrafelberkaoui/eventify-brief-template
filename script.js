@@ -200,3 +200,5 @@ function addVariantRow() {
 }
 const btnVar = document.getElementById("btn-add-variant")
 btnVar.addEventListener('click', addVariantRow)
+
+

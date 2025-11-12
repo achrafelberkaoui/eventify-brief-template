@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Events Management App</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div class="app">
         <!-- SIDEBAR -->
@@ -55,7 +57,7 @@
 
             <!-- SCREENS (only one visible at a time) -->
             <div class="screens">
-                
+
                 <!-- SCREEN 1: Statistics (DEFAULT) -->
                 <section class="screen is-visible" data-screen="stats">
                     <div class="screen__content">
@@ -94,81 +96,52 @@
                             <!-- Title -->
                             <div class="form__group">
                                 <label class="form__label" for="event-title">Event Title</label>
-                                <input 
-                                    type="text" 
-                                    id="event-title" 
-                                    class="input" 
-                                    placeholder="Enter event title"
-                                    required
-                                >
+                                <input type="text" id="event-title" class="input" placeholder="Enter event title"
+                                    required>
                             </div>
 
                             <!-- Image URL -->
                             <div class="form__group">
                                 <label class="form__label" for="event-image">Image URL</label>
-                                <input 
-                                    type="url" 
-                                    id="event-image" 
-                                    class="input" 
-                                    placeholder="https://example.com/image.jpg"
-                                >
+                                <input type="url" id="event-image" class="input"
+                                    placeholder="https://example.com/image.jpg">
                             </div>
 
                             <!-- Description -->
                             <div class="form__group">
                                 <label class="form__label" for="event-description">Description</label>
-                                <textarea 
-                                    id="event-description" 
-                                    class="input" 
-                                    placeholder="Describe the event..."
-                                    rows="4"
-                                ></textarea>
+                                <textarea id="event-description" class="input" placeholder="Describe the event..."
+                                    rows="4"></textarea>
                             </div>
 
                             <!-- Seats -->
                             <div class="form__group">
                                 <label class="form__label" for="event-seats">Number of Seats</label>
-                                <input 
-                                    type="number" 
-                                    id="event-seats" 
-                                    class="input" 
-                                    placeholder="100"
-                                    min="1"
-                                    required
-                                >
+                                <input type="number" id="event-seats" class="input" placeholder="100" min="1" required>
                             </div>
 
                             <!-- Base Price -->
                             <div class="form__group">
                                 <label class="form__label" for="event-price">Base Price ($)</label>
-                                <input 
-                                    type="number" 
-                                    id="event-price" 
-                                    class="input" 
-                                    placeholder="50.00"
-                                    min="0"
-                                    step="0.01"
-                                    required
-                                >
+                                <input type="number" id="event-price" class="input" placeholder="50.00" min="0"
+                                    step="0.01" required>
                             </div>
 
                             <!-- VARIANTS SECTION -->
                             <fieldset class="variants">
                                 <legend class="variants__title">
                                     Pricing Variants (Optional)
-                                    <button type="button" class="btn btn--small" id="btn-add-variant">+ Add Variant</button>
+                                    <button type="button" class="btn btn--small" id="btn-add-variant">+ Add
+                                        Variant</button>
                                 </legend>
-                                
+
                                 <!-- Variant rows will be appended here by JS -->
                                 <div id="variants-list" class="variants__list">
                                     <!-- EXAMPLE: Students should clone this structure -->
-<<<<<<< HEAD
-                                    
-                                    <!-- <div class="variant-row">
-=======
-<!--                                     
+
+                                    <!--                                     
                                     <div class="variant-row">
->>>>>>> 8be7e91c8021e127f56e654b1ab7a2da1e4673a0
+
                                         <input type="text" class="input variant-row__name" placeholder="Variant name (e.g., 'Early Bird')" />
                                         <input type="number" class="input variant-row__qty" placeholder="Qty" min="1" />
                                         <input type="number" class="input variant-row__value" placeholder="Value" step="0.01" />
@@ -178,7 +151,7 @@
                                         </select>
                                         <button type="button" class="btn btn--danger btn--small variant-row__remove">Remove</button>
                                     </div> -->
-                                   
+
                                 </div>
                             </fieldset>
 
@@ -196,12 +169,8 @@
                     <div class="screen__content">
                         <!-- Search & Sort Controls -->
                         <div class="controls">
-                            <input 
-                                type="text" 
-                                id="search-events" 
-                                class="input" 
-                                placeholder="🔍 Search events by title..."
-                            >
+                            <input type="text" id="search-events" class="input"
+                                placeholder="🔍 Search events by title...">
                             <select id="sort-events" class="select">
                                 <option value="title-asc">Sort: Title (A-Z)</option>
                                 <option value="title-desc">Sort: Title (Z-A)</option>
@@ -320,4 +289,5 @@
     -->
     <script src="script.js"></script>
 </body>
+
 </html>
