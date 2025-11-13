@@ -111,6 +111,7 @@ eventForm.addEventListener('submit', function (e) {
         ev.price = Number(document.getElementById("event-price").value);
         ev.variants = variants;
         editId = null;
+        alert(`event "${ev.title}" a modifier !`);
     } else {
         const AddEvent = {
             id: Date.now(),
@@ -121,8 +122,10 @@ eventForm.addEventListener('submit', function (e) {
             price: Number(document.getElementById("event-price").value),
             variants: variants
 
+
         };
         events.push(AddEvent);
+        alert(`event "${AddEvent.title}" a ajoute !`);
     }
     renderStats();
     addTable();
@@ -256,8 +259,36 @@ function ShowEdit(id) {
     document.getElementById("event-price").value = vn.price;
 
     switchScreen("add");
+}
+
+function addArchive() {
+    const arch = document.getElementById("affichArchive");
+    arch.innerHTML = "";
+    archive.forEach((e, index) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = ` 
+            <td>${index + 1}</td>
+            <td>${e.title}</td>
+            <td>${e.seats}</td>
+            <td>$${e.price}</td>
+            <td>
+                <button class="btn btn--small" data-action="restore"  data-event-id="${e.id}">Restore</button>
+            </td>
+            `;
+        arch.appendChild(tr);
+    })
 
 }
 
+function ShowArchive(id) {
+    const index = events.findIndex(e => e.id == id);
+    const archiv = events[index];
+    archive.push(archiv);
+    events.splice(index, 1);
+    addTable();
+    renderStats();
+    alert(`event "${archiv.title}" archive !`);
+    addArchive();
+}
 
 
