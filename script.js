@@ -272,9 +272,10 @@ function addArchive() {
             <td>${e.seats}</td>
             <td>$${e.price}</td>
             <td>
-                <button class="btn btn--small" data-action="restore"  data-event-id="${e.id}">Restore</button>
+                <button class="btn btn--small" data-action="restore" onclick="restoreEvents(${e.id})"  data-event-id="${e.id}">Restore</button>
             </td>
             `;
+
         arch.appendChild(tr);
     })
 
@@ -292,3 +293,13 @@ function ShowArchive(id) {
 }
 
 
+function restoreEvents(id) {
+    const ev = archive.findIndex(e => e.id == id);
+    const even = archive[ev];
+    events.push(even);
+    archive.splice(ev, 1);
+     addTable();
+    addArchive();
+    renderStats();
+    alert(`event "${ev.title}" restore !`);
+}
